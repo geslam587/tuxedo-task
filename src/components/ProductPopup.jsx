@@ -12,20 +12,20 @@ function ProductPopup() {
     const clearActiveProduct = () => {
         dispatch(clearActive())
         setCount(0)
-        setSize(0)
+        setSize(null)
     }
     const closeActiveProduct = (e) => {
         if (e.target.classList.contains("active")) {
             dispatch(clearActive())
             setCount(0)
-            setSize(0)
+            setSize(null)
         }
     }
     const cartAdd = () => {
         dispatch(addToCart({productID: product.id, count: +count, size: +size }))
         dispatch(clearActive())
         setCount(0)
-        setSize(0)
+        setSize(null)
     }
     useEffect(() => {
         window.addEventListener("keyup", (e) => {
@@ -52,7 +52,7 @@ function ProductPopup() {
                             aria-label="Default select example"
                             onChange={(e) => {setSize(e.target.value)}}
                         >
-                            <option defaultValue value="">choose an option</option>
+                            <option selected={size == null} defaultValue value="">choose an option</option>
                             <option value="46">46</option>
                             <option value="48">48</option>
                             <option value="50">50</option>
@@ -67,7 +67,7 @@ function ProductPopup() {
                     <input type="number" value={count} onChange={(e) => {setCount(e.target.value)}} min={0} />
                     <button
                         className={size && +count ? "active-button" : ""}
-                        onClick={size && +count ? cartAdd : ""}
+                        onClick={()=>{return size && +count ? cartAdd() : ""}}
                     >
                             {"Add to cart"}
                     </button>
